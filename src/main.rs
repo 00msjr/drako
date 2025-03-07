@@ -45,14 +45,14 @@ fn main() {
     }
 
     if dirs.is_empty() {
-        eprintln!("\x1b[1;33mNo directories provided.\x1b[0m");
+        eprintln!("\x1b[1;31mNo directories provided.\x1b[0m");
         std::process::exit(1);
     }
 
     // Process each directory
     for dir in dirs {
         if let Err(e) = fs::create_dir_all(&dir) {
-            eprintln!("\x1b[1;33mFailed to create directory {}:\x1b[0m {}", dir, e);
+            eprintln!("\x1b[1;31mFailed to create directory {}:\x1b[0m {}", dir, e);
             continue;
         } else {
             match std::fs::canonicalize(&dir) {
@@ -106,7 +106,7 @@ fn main() {
                         "{\n  \"importMap\": \"./import_map.json\"\n}",
                     ) {
                         eprintln!(
-                            "\x1b[1;33mFailed to create deno.json in {}:\x1b[0m {}",
+                            "\x1b[1;31mFailed to create deno.json in {}:\x1b[0m {}",
                             dir, e
                         );
                     }
@@ -196,7 +196,7 @@ fn main() {
 
                     if let Err(e) = fs::write(dir_path.join("README.md"), readme_content) {
                         eprintln!(
-                            "\x1b[1;33mFailed to create README.md in {}:\x1b[0m {}",
+                            "\x1b[1;31mFailed to create README.md in {}:\x1b[0m {}",
                             dir, e
                         );
                     }
@@ -224,12 +224,12 @@ fn main() {
 
                     if let Err(e) = fs::write(dir_path.join("LICENSE"), license_content) {
                         eprintln!(
-                            "\x1b[1;33mFailed to create LICENSE file in {}:\x1b[0m {}",
+                            "\x1b[1;31mFailed to create LICENSE file in {}:\x1b[0m {}",
                             dir, e
                         );
                     }
                 }
-                _ => eprintln!("\x1b[1;33mUnknown flag:\x1b[0m {}", flag),
+                _ => eprintln!("\x1b[1;31mUnknown flag:\x1b[0m {}", flag),
             }
         }
     }
