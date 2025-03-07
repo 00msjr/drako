@@ -14,15 +14,17 @@ fn main() {
     Multiple directories can be specified, and options apply to all of them.
 
 \x1b[1;33mOptions:\x1b[0m
-    --git                 Initialize a Git repository.
-    --readme              Generate a README.md file.
-    --mit                 Generate an MIT License file.
-    --npm                 Initialize an npm project (package.json).
-    --bun                 Initialize a Bun project.
-    --yarn                Initialize a Yarn project.
-    --pnpm                Initialize a pnpm project.
-    --cargo               Initialize a Rust Cargo project.
-    --deno                Initialize a Deno project (deno.json).
+    \x1b[32m--git,     -g\x1b[0m         Initialize a Git repository.
+    \x1b[32m--readme,  -r\x1b[0m         Generate a template README.md file.
+    \x1b[32m--license, -l\x1b[0m         Generate a template MIT License file.
+    \x1b[32m--docker,  -do\x1b[0m        Generate a template Docker file.
+    \x1b[32m--go,      -go\x1b[0m        Initialize a Go project.
+    \x1b[32m--cargo,   -c\x1b[0m         Initialize a Rust Cargo project.
+    \x1b[32m--npm,     -n\x1b[0m         Initialize an npm project (package.json).
+    \x1b[32m--bun,     -b\x1b[0m         Initialize a Bun project.
+    \x1b[32m--yarn,    -y\x1b[0m         Initialize a Yarn project.
+    \x1b[32m--pnpm,    -p\x1b[0m         Initialize a pnpm project.
+    \x1b[32m--deno,    -d\x1b[0m         Initialize a Deno project (deno.json).
 ";
         eprintln!("{}", usage_message);
         std::process::exit(1);
@@ -32,7 +34,10 @@ fn main() {
     let mut dirs: Vec<String> = Vec::new();
     let mut flags: Vec<String> = Vec::new();
     for arg in args.iter().skip(1) {
-        if arg.starts_with("--") {
+        // If the argument starts with a single `-` and is not followed by a digit, it's a flag
+        if arg.starts_with("--")
+            || (arg.starts_with("-") && arg.len() > 1 && !arg.chars().nth(1).unwrap().is_numeric())
+        {
             flags.push(arg.clone());
         } else {
             dirs.push(arg.clone());
@@ -40,17 +45,23 @@ fn main() {
     }
 
     if dirs.is_empty() {
-        eprintln!("No directories provided.");
+        eprintln!("\x1b[1;33mNo directories provided.\x1b[0m");
         std::process::exit(1);
     }
 
     // Process each directory
     for dir in dirs {
         if let Err(e) = fs::create_dir_all(&dir) {
-            eprintln!("Failed to create directory {}: {}", dir, e);
+            eprintln!("\x1b[1;33mFailed to create directory {}:\x1b[0m {}", dir, e);
             continue;
         } else {
-            println!("Created directory: {}", dir);
+            match std::fs::canonicalize(&dir) {
+                Ok(full_path) => println!(
+                    "\x1b[1;33mCreated directory:\x1b[0m {}",
+                    full_path.display()
+                ),
+                Err(_) => println!("\x1b[1;33mCreated directory:\x1b[0m {}", dir),
+            }
         }
 
         let dir_path = Path::new(&dir);
@@ -64,32 +75,87 @@ fn main() {
                 .output();
 
             if let Ok(output) = output {
-                if !output.status.success() {
-                    eprintln!("Failed to execute: {} in {}", cmd, dir);
+                if output.status.success() {
+                    println!("\x1b[1;32mSuccessfully executed:\x1b[0m {} in {}", cmd, dir);
+                } else {
+                    eprintln!(
+                        "\x1b[1;31mFailed to execute:\x1b[0m {} in {}\n{}",
+                        cmd,
+                        dir,
+                        String::from_utf8_lossy(&output.stderr)
+                    );
                 }
             } else {
-                eprintln!("Error running: {} in {}", cmd, dir);
+                eprintln!("\x1b[1;31mError running:\x1b[0m {} in {}", cmd, dir);
             }
         };
 
         // Process each flag for the current directory
         for flag in &flags {
             match flag.as_str() {
-                "--git" => run_command("git init"),
-                "--npm" => run_command("npm init -y"),
-                "--bun" => run_command("bun init"),
-                "--yarn" => run_command("yarn init -y"),
-                "--pnpm" => run_command("pnpm init"),
-                "--cargo" => run_command("cargo init"),
-                "--deno" => {
+                "--git" | "-g" => run_command("git init"),
+                "--npm" | "-n" => run_command("npm init -y"),
+                "--bun" | "-b" => run_command("bun init"),
+                "--yarn" | "-y" => run_command("yarn init -y"),
+                "--pnpm" | "-p" => run_command("pnpm init"),
+                "--cargo" | "-c" => run_command("cargo init"),
+                "--go" | "-go" => run_command(&format!("go mod init {}", dir)),
+                "--deno" | "-d" => {
                     if let Err(e) = fs::write(
                         dir_path.join("deno.json"),
                         "{\n  \"importMap\": \"./import_map.json\"\n}",
                     ) {
-                        eprintln!("Failed to create deno.json in {}: {}", dir, e);
+                        eprintln!(
+                            "\x1b[1;33mFailed to create deno.json in {}:\x1b[0m {}",
+                            dir, e
+                        );
                     }
                 }
-                "--readme" => {
+                "--docker" | "-do" => {
+                    let dockerfile_content = r#"
+                        # Base image (Default: Debian)
+                        ARG BASE_IMAGE=debian:latest
+                        FROM $BASE_IMAGE AS builder
+
+                        # Set working directory
+                        WORKDIR /app
+
+                        # Copy project files
+                        COPY . .
+
+                        # Install dependencies based on the selected stack
+                        ARG STACK=node
+                        RUN case "$STACK" in \
+                                node) apt update && apt install -y curl && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && apt install -y nodejs ;; \
+                                python) apt update && apt install -y python3 python3-pip ;; \
+                                rust) apt update && apt install -y curl && curl https://sh.rustup.rs -sSf | sh -s -- -y ;; \
+                                go) apt update && apt install -y golang ;; \
+                                deno) curl -fsSL https://deno.land/install.sh | sh ;; \
+                                *) echo "No valid stack specified"; exit 1 ;; \
+                            esac
+
+                        # Expose port (Modify as needed)
+                        EXPOSE 3000
+
+                        # Command to run the application (Modify based on project type)
+                        CMD ["echo", "Container is running, customize CMD as needed!"]
+                        "#;
+
+                    let dockerfile_path = dir_path.join("Dockerfile");
+                    if let Err(e) = fs::write(dockerfile_path, dockerfile_content) {
+                        eprintln!(
+                            "\x1b[1;31mFailed to create Dockerfile in {}:\x1b[0m {}",
+                            dir_path.display(),
+                            e
+                        );
+                    } else {
+                        println!(
+                            "\x1b[1;32mSuccessfully created Dockerfile in {}.\x1b[0m",
+                            dir_path.display()
+                        );
+                    }
+                }
+                "--readme" | "-r" => {
                     let readme_content = format!(
                         "# Project Title\n\n\
                         Simple overview of use/purpose.\n\n\
@@ -129,10 +195,13 @@ fn main() {
                     );
 
                     if let Err(e) = fs::write(dir_path.join("README.md"), readme_content) {
-                        eprintln!("Failed to create README.md in {}: {}", dir, e);
+                        eprintln!(
+                            "\x1b[1;33mFailed to create README.md in {}:\x1b[0m {}",
+                            dir, e
+                        );
                     }
                 }
-                "--mit" => {
+                "--license" | "-l" => {
                     let license_content = format!(
                         "MIT License\n\n\
                         Copyright (c) [YEAR] [YOUR NAME]\n\n\
@@ -154,10 +223,13 @@ fn main() {
                     );
 
                     if let Err(e) = fs::write(dir_path.join("LICENSE"), license_content) {
-                        eprintln!("Failed to create LICENSE file in {}: {}", dir, e);
+                        eprintln!(
+                            "\x1b[1;33mFailed to create LICENSE file in {}:\x1b[0m {}",
+                            dir, e
+                        );
                     }
                 }
-                _ => eprintln!("Unknown flag: {}", flag),
+                _ => eprintln!("\x1b[1;33mUnknown flag:\x1b[0m {}", flag),
             }
         }
     }

@@ -1,6 +1,24 @@
 [package]
 name = "makedir"
-version = "0.1.0"
-edition = "2024"
+version = "0.2.0"
+edition = "2021"
+authors = ["soup-ms <michaelsousajr@gmail.com>"]
+description = "A better mkdir command with project setup automation."
+license = "MIT"
+repository = "https://github.com/soup-ms/makedir"
+readme = "README.md"
+keywords = ["mkdir", "directory", "automation", "cli"]
+categories = ["command-line-utilities"]
+exclude = [".github", "tests"]
 
 [dependencies]
+clap = { version = "4.0", features = ["derive"] } # CLI argument parsing
+dirs = "5.0"                                      # Cross-platform home directory support
+which = "4.4"                                     # Check for installed dependencies like Git, gh CLI
+
+[dev-dependencies]
+tempfile = "3.8"                                  # Temporary directory creation for tests
+
+[[bin]]
+name = "makedir"
+path = "src/main.rs"
