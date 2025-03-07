@@ -12,13 +12,14 @@
 # makedir
 
 [![crates.io](https://img.shields.io/crates/v/makedir?logo=rust&logoColor=white&style=flat-square)](https://crates.io/crates/makedir)
+[![homebrew](https://img.shields.io/homebrew/v/makedir?logo=homebrew&style=flat-square)](https://formulae.brew.sh/formula/makedir)
 [![Downloads](https://img.shields.io/github/downloads/soup-ms/makedir/total?logo=github&logoColor=white&style=flat-square)](https://github.com/soup-ms/makedir/releases)
 
-makedir is a **smarter directory creation tool**, inspired by mkdir.
+makedir is a **better directory creation tool**.
 
-It creates directories with project initialization options, so you can set up
+Makedir creates directories with project initialization options, so you can set up
 new projects in just a few keystrokes.<br />
-makedir works on all major operating systems.
+makedir works on all major operating systems and is written in Rust 🦀.
 
 [Getting started](#getting-started) •
 [Installation](#installation) •
@@ -61,14 +62,18 @@ makedir can be installed in a few easy steps:
    <details>
    <summary>Linux / WSL</summary>
 
-   > The recommended way to install makedir is via cargo:
+   > Using apt (Debian/Ubuntu):
+   > ```sh
+   > sudo apt update
+   > sudo apt install makedir
+   > ```
    >
+   > Using cargo:
    > ```sh
    > cargo install makedir --locked
    > ```
    >
-   > Or, you can use the install script:
-   >
+   > Or, use the install script:
    > ```sh
    > curl -sSfL https://raw.githubusercontent.com/soup-ms/makedir/main/install.sh | sh
    > ```
@@ -78,14 +83,17 @@ makedir can be installed in a few easy steps:
    <details>
    <summary>macOS</summary>
 
-   > To install makedir, use cargo:
+   > Using Homebrew:
+   > ```sh
+   > brew install makedir
+   > ```
    >
+   > Using cargo:
    > ```sh
    > cargo install makedir --locked
    > ```
    >
-   > Or, run this command in your terminal:
-   >
+   > Or, use the install script:
    > ```sh
    > curl -sSfL https://raw.githubusercontent.com/soup-ms/makedir/main/install.sh | sh
    > ```
@@ -129,6 +137,9 @@ makedir can be installed in a few easy steps:
    > alias mdg='makedir --git'
    > alias mdr='makedir --readme'
    > alias mdgr='makedir --git --readme'
+   > 
+   > # For shell completion (if available)
+   > eval "$(makedir --completion bash)"
    > ```
 
    </details>
@@ -146,6 +157,9 @@ makedir can be installed in a few easy steps:
    > alias mdg='makedir --git'
    > alias mdr='makedir --readme'
    > alias mdgr='makedir --git --readme'
+   > 
+   > # For shell completion (if available)
+   > eval "$(makedir --completion zsh)"
    > ```
 
    </details>
@@ -163,6 +177,9 @@ makedir can be installed in a few easy steps:
    > alias mdg='makedir --git'
    > alias mdr='makedir --readme'
    > alias mdgr='makedir --git --readme'
+   > 
+   > # For shell completion (if available)
+   > makedir --completion fish | source
    > ```
 
    </details>
@@ -236,7 +253,14 @@ makedir can be integrated with various tools and workflows:
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! To contribute:  
+
+1. **Fork the repo.**  
+2. **Make your changes.**  
+3. **Test thoroughly.**  
+4. **Submit a Pull Request (PR).**  
+
+Feel free to open an issue for discussions or ideas.
 
 ## License
 
