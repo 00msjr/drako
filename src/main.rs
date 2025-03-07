@@ -8,24 +8,24 @@ fn main() {
 
     if args.len() < 2 {
         let usage_message = "\
-\x1b[1;33mUsage:\x1b[0m makedir [directories] [options]
+            \x1b[1;33mUsage:\x1b[0m makedir [directories] [options]
 
-\x1b[1;33mHelp:\x1b[0m  Creates one or more directories with optional project initialization.
-    Multiple directories can be specified, and options apply to all of them.
+            \x1b[1;33mHelp:\x1b[0m  Creates one or more directories with optional project initialization.
+                Multiple directories can be specified, and options apply to all of them.
 
-\x1b[1;33mOptions:\x1b[0m
-    \x1b[32m--git,     -g\x1b[0m         Initialize a Git repository.
-    \x1b[32m--readme,  -r\x1b[0m         Generate a template README.md file.
-    \x1b[32m--license, -l\x1b[0m         Generate a template MIT License file.
-    \x1b[32m--docker,  -do\x1b[0m        Generate a template Docker file.
-    \x1b[32m--go,      -go\x1b[0m        Initialize a Go project.
-    \x1b[32m--cargo,   -c\x1b[0m         Initialize a Rust Cargo project.
-    \x1b[32m--npm,     -n\x1b[0m         Initialize an npm project (package.json).
-    \x1b[32m--bun,     -b\x1b[0m         Initialize a Bun project.
-    \x1b[32m--yarn,    -y\x1b[0m         Initialize a Yarn project.
-    \x1b[32m--pnpm,    -p\x1b[0m         Initialize a pnpm project.
-    \x1b[32m--deno,    -d\x1b[0m         Initialize a Deno project (deno.json).
-";
+            \x1b[1;33mOptions:\x1b[0m
+                \x1b[32m--git,     -g\x1b[0m         Initialize a Git repository.
+                \x1b[32m--readme,  -r\x1b[0m         Generate a template README.md file.
+                \x1b[32m--license, -l\x1b[0m         Generate a template MIT License file.
+                \x1b[32m--docker,  -do\x1b[0m        Generate a template Docker file.
+                \x1b[32m--go,      -go\x1b[0m        Initialize a Go project.
+                \x1b[32m--cargo,   -c\x1b[0m         Initialize a Rust Cargo project.
+                \x1b[32m--npm,     -n\x1b[0m         Initialize an npm project (package.json).
+                \x1b[32m--bun,     -b\x1b[0m         Initialize a Bun project.
+                \x1b[32m--yarn,    -y\x1b[0m         Initialize a Yarn project.
+                \x1b[32m--pnpm,    -p\x1b[0m         Initialize a pnpm project.
+                \x1b[32m--deno,    -d\x1b[0m         Initialize a Deno project (deno.json).
+            ";
         eprintln!("{}", usage_message);
         std::process::exit(1);
     }
