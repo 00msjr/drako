@@ -63,17 +63,20 @@ makedir can be installed in a few easy steps:
    <summary>Linux / WSL</summary>
 
    > Using apt (Debian/Ubuntu):
+   >
    > ```sh
    > sudo apt update
    > sudo apt install makedir
    > ```
    >
    > Using cargo:
+   >
    > ```sh
    > cargo install makedir --locked
    > ```
    >
    > Or, use the install script:
+   >
    > ```sh
    > curl -sSfL https://raw.githubusercontent.com/soup-ms/makedir/main/install.sh | sh
    > ```
@@ -84,16 +87,19 @@ makedir can be installed in a few easy steps:
    <summary>macOS</summary>
 
    > Using Homebrew:
+   >
    > ```sh
    > brew install makedir
    > ```
    >
    > Using cargo:
+   >
    > ```sh
    > cargo install makedir --locked
    > ```
    >
    > Or, use the install script:
+   >
    > ```sh
    > curl -sSfL https://raw.githubusercontent.com/soup-ms/makedir/main/install.sh | sh
    > ```
@@ -132,12 +138,12 @@ makedir can be installed in a few easy steps:
    > ```sh
    > # Basic alias
    > alias md='makedir'
-   > 
+   >
    > # Aliases with common options
    > alias mdg='makedir --git'
    > alias mdr='makedir --readme'
    > alias mdgr='makedir --git --readme'
-   > 
+   >
    > # For shell completion (if available)
    > eval "$(makedir --completion bash)"
    > ```
@@ -152,12 +158,12 @@ makedir can be installed in a few easy steps:
    > ```sh
    > # Basic alias
    > alias md='makedir'
-   > 
+   >
    > # Aliases with common options
    > alias mdg='makedir --git'
    > alias mdr='makedir --readme'
    > alias mdgr='makedir --git --readme'
-   > 
+   >
    > # For shell completion (if available)
    > eval "$(makedir --completion zsh)"
    > ```
@@ -172,12 +178,12 @@ makedir can be installed in a few easy steps:
    > ```sh
    > # Basic alias
    > alias md='makedir'
-   > 
+   >
    > # Aliases with common options
    > alias mdg='makedir --git'
    > alias mdr='makedir --readme'
    > alias mdgr='makedir --git --readme'
-   > 
+   >
    > # For shell completion (if available)
    > makedir --completion fish | source
    > ```
@@ -192,7 +198,7 @@ makedir can be installed in a few easy steps:
    > ```powershell
    > # Basic alias
    > Set-Alias -Name md -Value makedir
-   > 
+   >
    > # Function aliases with common options
    > function mdg { makedir --git $args }
    > function mdr { makedir --readme $args }
@@ -205,20 +211,20 @@ makedir can be installed in a few easy steps:
 
 makedir provides several project initialization options:
 
-| Flag | Short | Description |
-|------|-------|-------------|
-| `--git` | `-g` | Initialize a Git repository |
-| `--readme` | `-r` | Generate a template README.md file |
-| `--license` | `-l` | Generate a template MIT License file |
-| `--docker` | `-do` | Generate a template Docker file |
-| `--go` | `-go` | Initialize a Go project |
-| `--cargo` | `-c` | Initialize a Rust Cargo project |
-| `--npm` | `-n` | Initialize an npm project (package.json) |
-| `--bun` | `-b` | Initialize a Bun project |
-| `--yarn` | `-y` | Initialize a Yarn project |
-| `--pnpm` | `-p` | Initialize a pnpm project |
-| `--deno` | `-d` | Initialize a Deno project (deno.json) |
-| `-XXX` |  | Set directory permissions (octal format, e.g., -700, -755) |
+| Flag        | Short | Description                                                |
+| ----------- | ----- | ---------------------------------------------------------- |
+| `--git`     | `-g`  | Initialize a Git repository                                |
+| `--readme`  | `-r`  | Generate a template README.md file                         |
+| `--license` | `-l`  | Generate a template MIT License file                       |
+| `--docker`  | `-do` | Generate a template Docker file                            |
+| `--go`      | `-go` | Initialize a Go project                                    |
+| `--cargo`   | `-c`  | Initialize a Rust Cargo project                            |
+| `--npm`     | `-n`  | Initialize an npm project (package.json)                   |
+| `--bun`     | `-b`  | Initialize a Bun project                                   |
+| `--yarn`    | `-y`  | Initialize a Yarn project                                  |
+| `--pnpm`    | `-p`  | Initialize a pnpm project                                  |
+| `--deno`    | `-d`  | Initialize a Deno project (deno.json)                      |
+|             | -XXX  | Set directory permissions (octal format, e.g., -700, -755) |
 
 ## Configuration
 
@@ -246,23 +252,24 @@ Future versions of makedir may support environment variables for configuration.
 
 makedir can be integrated with various tools and workflows:
 
-| Application | Description | Integration |
-|-------------|-------------|-------------|
-| Git hooks | Automatically initialize projects | Use in post-clone hooks |
-| CI/CD pipelines | Create project structures | Include in workflow scripts |
-| Project templates | Standardize project setup | Combine with template tools |
+| Application       | Description                       | Integration                 |
+| ----------------- | --------------------------------- | --------------------------- |
+| Git hooks         | Automatically initialize projects | Use in post-clone hooks     |
+| CI/CD pipelines   | Create project structures         | Include in workflow scripts |
+| Project templates | Standardize project setup         | Combine with template tools |
 
 ## Contributing
 
-Contributions are welcome! To contribute:  
+Contributions are welcome! To contribute:
 
-1. **Fork the repo.**  
-2. **Make your changes.**  
-3. **Test thoroughly.**  
-4. **Submit a Pull Request (PR).**  
+1. **Fork the repo.**
+2. **Make your changes.**
+3. **Test thoroughly.**
+4. **Submit a Pull Request (PR).**
 
 Feel free to open an issue for discussions or ideas.
 
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
