@@ -211,20 +211,20 @@ makedir can be installed in a few easy steps:
 
 makedir provides several project initialization options:
 
-| Flag        | Short | Description                                                |
-| ----------- | ----- | ---------------------------------------------------------- |
-| `--git`     | `-g`  | Initialize a Git repository                                |
-| `--readme`  | `-r`  | Generate a template README.md file                         |
-| `--license` | `-l`  | Generate a template MIT License file                       |
-| `--docker`  | `-do` | Generate a template Docker file                            |
-| `--go`      | `-go` | Initialize a Go project                                    |
-| `--cargo`   | `-c`  | Initialize a Rust Cargo project                            |
-| `--npm`     | `-n`  | Initialize an npm project (package.json)                   |
-| `--bun`     | `-b`  | Initialize a Bun project                                   |
-| `--yarn`    | `-y`  | Initialize a Yarn project                                  |
-| `--pnpm`    | `-p`  | Initialize a pnpm project                                  |
-| `--deno`    | `-d`  | Initialize a Deno project (deno.json)                      |
-|             | -XXX  | Set directory permissions (octal format, e.g., -700, -755) |
+| Flag        | Short  | Description                                                |
+| ----------- | ------ | ---------------------------------------------------------- |
+| `--git`     | `-g`   | Initialize a Git repository                                |
+| `--readme`  | `-r`   | Generate a template README.md file                         |
+| `--license` | `-l`   | Generate a template MIT License file                       |
+| `--docker`  | `-do`  | Generate a template Docker file                            |
+| `--go`      | `-go`  | Initialize a Go project                                    |
+| `--cargo`   | `-c`   | Initialize a Rust Cargo project                            |
+| `--npm`     | `-n`   | Initialize an npm project (package.json)                   |
+| `--bun`     | `-b`   | Initialize a Bun project                                   |
+| `--yarn`    | `-y`   | Initialize a Yarn project                                  |
+| `--pnpm`    | `-p`   | Initialize a pnpm project                                  |
+| `--deno`    | `-d`   | Initialize a Deno project (deno.json)                      |
+|             | `-XXX` | Set directory permissions (octal format, e.g., -700, -755) |
 
 ## Configuration
 
@@ -272,4 +272,3 @@ Feel free to open an issue for discussions or ideas.
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
