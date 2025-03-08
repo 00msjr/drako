@@ -34,9 +34,12 @@ makedir myproject                  # Create a simple directory
 makedir myproject --git            # Create a directory and initialize git
 makedir myproject --git --readme   # Create a directory with git and README.md
 makedir project1 project2 --npm    # Create multiple directories with npm init
+makedir myproject -755             # Create a directory with permissions set to 755
+makedir myproject --verbose        # Create a directory with verbose output
 
 # Use short flags for convenience
 makedir myproject -g -r            # Same as --git --readme
+makedir myproject -v -755          # Create with verbose output and permissions 755
 ```
 
 Create an alias for even faster usage:
@@ -44,9 +47,11 @@ Create an alias for even faster usage:
 ```sh
 # Add to your shell config file (.bashrc, .zshrc, etc.)
 alias md='makedir'
+alias mdv='makedir -v'             # Always use verbose output
 
 # Then use it like this:
 md newproject -g -r                # Create directory with git and README
+mdv newproject -g -755             # Create with git, verbose output and permissions 755
 ```
 
 ## Installation
@@ -235,6 +240,7 @@ makedir provides several project initialization options:
 | `--yarn`    | `-y`   | Initialize a Yarn project                                  |
 | `--pnpm`    | `-p`   | Initialize a pnpm project                                  |
 | `--deno`    | `-d`   | Initialize a Deno project (deno.json)                      |
+| `--verbose` | `-v`   | Show detailed output from commands                         |
 |             | `-###` | Set directory permissions (octal format, e.g., -700, -755) |
 
 ## Configuration

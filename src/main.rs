@@ -46,11 +46,16 @@ fn main() {
         if arg.starts_with("-") {
             // Check if it's a permission tag (e.g., -700)
             if arg.len() > 1 && arg.chars().nth(1).unwrap().is_numeric() {
-                // Parse the permission octal value
-                if let Ok(perm) = u32::from_str_radix(&arg[1..], 8) {
-                    permissions = Some(perm);
+                // Validate permission format (must be 3 digits between 000-777)
+                let perm_str = &arg[1..];
+                if perm_str.len() <= 3 && perm_str.chars().all(|c| c >= '0' && c <= '7') {
+                    if let Ok(perm) = u32::from_str_radix(perm_str, 8) {
+                        permissions = Some(perm);
+                    } else {
+                        eprintln!("\x1b[1;31mInvalid permission format: {}\x1b[0m", arg);
+                    }
                 } else {
-                    eprintln!("\x1b[1;31mInvalid permission format: {}\x1b[0m", arg);
+                    eprintln!("\x1b[1;31mInvalid permission format: {}. Must be 3 octal digits (000-777).\x1b[0m", arg);
                 }
             }
             // Check for verbose flag
