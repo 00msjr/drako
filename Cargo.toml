@@ -1,6 +1,6 @@
 [package]
 name = "makedir"
-version = "0.2.1"
+version = "0.2.2"
 edition = "2021"
 authors = ["soup-ms <michaelsousajr@gmail.com>"]
 description = "A better mkdir command with project setup automation."
