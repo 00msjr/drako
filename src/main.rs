@@ -43,23 +43,26 @@ fn main() {
     while i < args.len() {
         let arg = &args[i];
 
-        // Check if it's a permission tag (e.g., -700)
-        if arg.starts_with("-") && arg.len() > 1 && arg.chars().nth(1).unwrap().is_numeric() {
-            // Parse the permission octal value
-            if let Ok(perm) = u32::from_str_radix(&arg[1..], 8) {
-                permissions = Some(perm);
-            } else {
-                eprintln!("\x1b[1;31mInvalid permission format: {}\x1b[0m", arg);
+        if arg.starts_with("-") {
+            // Check if it's a permission tag (e.g., -700)
+            if arg.len() > 1 && arg.chars().nth(1).unwrap().is_numeric() {
+                // Parse the permission octal value
+                if let Ok(perm) = u32::from_str_radix(&arg[1..], 8) {
+                    permissions = Some(perm);
+                } else {
+                    eprintln!("\x1b[1;31mInvalid permission format: {}\x1b[0m", arg);
+                }
             }
-        }
-        // Check for verbose flag
-        else if arg == "--verbose" || arg == "-v" {
-            verbose = true;
-        }
-        // If the argument starts with -- or a single - and is not a number, it's a flag
-        else if arg.starts_with("--") || (arg.starts_with("-") && arg.len() > 1) {
-            flags.push(arg.clone());
+            // Check for verbose flag
+            else if arg == "--verbose" || arg == "-v" {
+                verbose = true;
+            }
+            // It's a regular action flag
+            else {
+                flags.push(arg.clone());
+            }
         } else {
+            // Not a flag, must be a directory
             dirs.push(arg.clone());
         }
 
@@ -73,16 +76,19 @@ fn main() {
 
     // Process each directory
     for dir in dirs {
-        if let Err(e) = fs::create_dir_all(&dir) {
+        let path = Path::new(&dir);
+        if path.exists() {
+            println!("\x1b[1;33mDirectory already exists:\x1b[0m {}", dir);
+        } else if let Err(e) = fs::create_dir_all(&dir) {
             eprintln!("\x1b[1;31mFailed to create directory {}:\x1b[0m {}", dir, e);
             continue;
         } else if verbose {
             match std::fs::canonicalize(&dir) {
                 Ok(full_path) => println!(
-                    "\x1b[1;33mCreated directory:\x1b[0m {}",
+                    "\x1b[1;33mCreating directory:\x1b[0m {}",
                     full_path.display()
                 ),
-                Err(_) => println!("\x1b[1;33mCreated directory:\x1b[0m {}", dir),
+                Err(_) => println!("\x1b[1;33mCreating directory:\x1b[0m {}", dir),
             }
         }
 
@@ -97,7 +103,7 @@ fn main() {
                             "\x1b[1;31mFailed to set permissions {} on {}:\x1b[0m {}",
                             mode, dir, e
                         );
-                    } else {
+                    } else if verbose {
                         println!("\x1b[1;32mSet permissions {:o} on {}\x1b[0m", mode, dir);
                     }
                 }
@@ -124,7 +130,7 @@ fn main() {
                 } else {
                     // Always show errors regardless of verbose flag
                     eprintln!(
-                        "\x1b[1;31mFailed to execute:\x1b[0m {} in {}\n{}",
+                        "\x1b[1;31mFailed to execute:\x1b[0m {} in {} {}",
                         cmd,
                         dir,
                         String::from_utf8_lossy(&output.stderr)
