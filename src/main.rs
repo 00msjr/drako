@@ -9,25 +9,26 @@ fn main() {
 
     if args.len() < 2 {
         let usage_message = "\
-            \x1b[1;33mUsage:\x1b[0m makedir [directories] [options]
+\x1b[1;33mUsage:\x1b[0m makedir [directories] [options]
 
-            \x1b[1;33mHelp:\x1b[0m  Creates one or more directories with optional project initialization.
-                Multiple directories can be specified, and options apply to all of them.
+\x1b[1;33mHelp:\x1b[0m  Creates one or more directories with optional project initialization.
+       Multiple directories can be specified, and options apply to all of them.
 
-            \x1b[1;33mOptions:\x1b[0m
-                \x1b[32m--git,     -g\x1b[0m         Initialize a Git repository.
-                \x1b[32m--readme,  -r\x1b[0m         Generate a template README.md file.
-                \x1b[32m--license, -l\x1b[0m         Generate a template MIT License file.
-                \x1b[32m--docker,  -do\x1b[0m        Generate a template Docker file.
-                \x1b[32m--go,      -go\x1b[0m        Initialize a Go project.
-                \x1b[32m--cargo,   -c\x1b[0m         Initialize a Rust Cargo project.
-                \x1b[32m--npm,     -n\x1b[0m         Initialize an npm project (package.json).
-                \x1b[32m--bun,     -b\x1b[0m         Initialize a Bun project.
-                \x1b[32m--yarn,    -y\x1b[0m         Initialize a Yarn project.
-                \x1b[32m--pnpm,    -p\x1b[0m         Initialize a pnpm project.
-                \x1b[32m--deno,    -d\x1b[0m         Initialize a Deno project (deno.json).
-                \x1b[32m-XXX\x1b[0m                  Set directory permissions (octal format, e.g., -700, -755).
-            ";
+\x1b[1;33mOptions:\x1b[0m
+    \x1b[32m--git,     -g\x1b[0m         Initialize a Git repository.
+    \x1b[32m--readme,  -r\x1b[0m         Generate a template README.md file.
+    \x1b[32m--license, -l\x1b[0m         Generate a template MIT License file.
+    \x1b[32m--docker,  -do\x1b[0m        Generate a template Docker file.
+    \x1b[32m--go,      -go\x1b[0m        Initialize a Go project.
+    \x1b[32m--cargo,   -c\x1b[0m         Initialize a Rust Cargo project.
+    \x1b[32m--npm,     -n\x1b[0m         Initialize an npm project (package.json).
+    \x1b[32m--bun,     -b\x1b[0m         Initialize a Bun project.
+    \x1b[32m--yarn,    -y\x1b[0m         Initialize a Yarn project.
+    \x1b[32m--pnpm,    -p\x1b[0m         Initialize a pnpm project.
+    \x1b[32m--deno,    -d\x1b[0m         Initialize a Deno project (deno.json).
+    \x1b[32m--verbose, -v\x1b[0m         Show detailed output from commands.
+    \x1b[32m           -###\x1b[0m       Set directory permissions (octal format, e.g., -700, -755).
+";
         eprintln!("{}", usage_message);
         std::process::exit(1);
     }
@@ -36,6 +37,7 @@ fn main() {
     let mut dirs: Vec<String> = Vec::new();
     let mut flags: Vec<String> = Vec::new();
     let mut permissions: Option<u32> = None;
+    let mut verbose = false;
 
     let mut i = 1;
     while i < args.len() {
@@ -49,6 +51,10 @@ fn main() {
             } else {
                 eprintln!("\x1b[1;31mInvalid permission format: {}\x1b[0m", arg);
             }
+        }
+        // Check for verbose flag
+        else if arg == "--verbose" || arg == "-v" {
+            verbose = true;
         }
         // If the argument starts with -- or a single - and is not a number, it's a flag
         else if arg.starts_with("--") || (arg.starts_with("-") && arg.len() > 1) {
@@ -70,7 +76,7 @@ fn main() {
         if let Err(e) = fs::create_dir_all(&dir) {
             eprintln!("\x1b[1;31mFailed to create directory {}:\x1b[0m {}", dir, e);
             continue;
-        } else {
+        } else if verbose {
             match std::fs::canonicalize(&dir) {
                 Ok(full_path) => println!(
                     "\x1b[1;33mCreated directory:\x1b[0m {}",
@@ -111,8 +117,12 @@ fn main() {
 
             if let Ok(output) = output {
                 if output.status.success() {
-                    println!("\x1b[1;32mSuccessfully executed:\x1b[0m {} in {}", cmd, dir);
+                    if verbose {
+                        let _stdout = String::from_utf8_lossy(&output.stdout);
+                        println!("\x1b[1;32mSuccessfully executed:\x1b[0m {} in {}", cmd, dir);
+                    }
                 } else {
+                    // Always show errors regardless of verbose flag
                     eprintln!(
                         "\x1b[1;31mFailed to execute:\x1b[0m {} in {}\n{}",
                         cmd,
@@ -143,6 +153,11 @@ fn main() {
                         eprintln!(
                             "\x1b[1;31mFailed to create deno.json in {}:\x1b[0m {}",
                             dir, e
+                        );
+                    } else if verbose {
+                        println!(
+                            "\x1b[1;32mSuccessfully created deno.json in {}.\x1b[0m",
+                            dir
                         );
                     }
                 }
@@ -177,13 +192,13 @@ fn main() {
                         "#;
 
                     let dockerfile_path = dir_path.join("Dockerfile");
-                    if let Err(e) = fs::write(dockerfile_path, dockerfile_content) {
+                    if let Err(e) = fs::write(&dockerfile_path, dockerfile_content) {
                         eprintln!(
                             "\x1b[1;31mFailed to create Dockerfile in {}:\x1b[0m {}",
                             dir_path.display(),
                             e
                         );
-                    } else {
+                    } else if verbose {
                         println!(
                             "\x1b[1;32mSuccessfully created Dockerfile in {}.\x1b[0m",
                             dir_path.display()
@@ -229,10 +244,15 @@ fn main() {
                         https://twitter.com/dompizzie\n"
                     );
 
-                    if let Err(e) = fs::write(dir_path.join("README.md"), readme_content) {
+                    if let Err(e) = fs::write(dir_path.join("README.md"), &readme_content) {
                         eprintln!(
                             "\x1b[1;31mFailed to create README.md in {}:\x1b[0m {}",
                             dir, e
+                        );
+                    } else if verbose {
+                        println!(
+                            "\x1b[1;32mSuccessfully created README.md in {}.\x1b[0m",
+                            dir
                         );
                     }
                 }
@@ -257,10 +277,15 @@ fn main() {
                         SOFTWARE.\n"
                     );
 
-                    if let Err(e) = fs::write(dir_path.join("LICENSE"), license_content) {
+                    if let Err(e) = fs::write(dir_path.join("LICENSE"), &license_content) {
                         eprintln!(
                             "\x1b[1;31mFailed to create LICENSE file in {}:\x1b[0m {}",
                             dir, e
+                        );
+                    } else if verbose {
+                        println!(
+                            "\x1b[1;32mSuccessfully created LICENSE file in {}.\x1b[0m",
+                            dir
                         );
                     }
                 }
