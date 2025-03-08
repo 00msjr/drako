@@ -12,7 +12,6 @@
 # makedir
 
 [![crates.io](https://img.shields.io/crates/v/makedir?logo=rust&logoColor=white&style=flat-square)](https://crates.io/crates/makedir)
-[![homebrew](https://img.shields.io/homebrew/v/makedir?logo=homebrew&style=flat-square)](https://formulae.brew.sh/formula/makedir)
 [![Downloads](https://img.shields.io/github/downloads/soup-ms/makedir/total?logo=github&logoColor=white&style=flat-square)](https://github.com/soup-ms/makedir/releases)
 
 makedir is a **better directory creation tool**.
@@ -53,16 +52,16 @@ md newproject -g -r                # Create directory with git and README
 ## Installation
 
 ### Using Cargo
+
 ```bash
 cargo install makedir
 ```
 
 ### Using Homebrew
+
 ```bash
 brew install soup-ms/tap/makedir
 ```
-
-
 
 makedir can be installed in a few easy steps:
 
