@@ -52,6 +52,23 @@ md newproject -g -r                # Create directory with git and README
 
 ## Installation
 
+### Using Cargo
+```bash
+cargo install makedir
+```
+
+### Using Homebrew
+```bash
+brew install soup-ms/tap/makedir
+```
+
+### Debian/Ubuntu
+```bash
+# Download the latest .deb package from GitHub releases
+wget https://github.com/soup-ms/makedir/releases/download/v0.2.1/makedir_0.2.1_amd64.deb
+sudo apt install ./makedir_0.2.1_amd64.deb
+```
+
 makedir can be installed in a few easy steps:
 
 1. **Install binary**
@@ -89,6 +106,7 @@ makedir can be installed in a few easy steps:
    > Using Homebrew:
    >
    > ```sh
+   > brew tap soup-ms/makedir
    > brew install makedir
    > ```
    >
