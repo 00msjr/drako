@@ -1,5 +1,6 @@
 use std::env;
 use std::fs;
+use std::os::unix::fs::PermissionsExt;
 use std::path::Path;
 use std::process::Command;
 
@@ -25,23 +26,38 @@ fn main() {
                 \x1b[32m--yarn,    -y\x1b[0m         Initialize a Yarn project.
                 \x1b[32m--pnpm,    -p\x1b[0m         Initialize a pnpm project.
                 \x1b[32m--deno,    -d\x1b[0m         Initialize a Deno project (deno.json).
+                \x1b[32m-XXX\x1b[0m                  Set directory permissions (octal format, e.g., -700, -755).
             ";
         eprintln!("{}", usage_message);
         std::process::exit(1);
     }
 
-    // Separate directory names from flags
+    // Separate directory names from flags and permissions
     let mut dirs: Vec<String> = Vec::new();
     let mut flags: Vec<String> = Vec::new();
-    for arg in args.iter().skip(1) {
-        // If the argument starts with a single `-` and is not followed by a digit, it's a flag
-        if arg.starts_with("--")
-            || (arg.starts_with("-") && arg.len() > 1 && !arg.chars().nth(1).unwrap().is_numeric())
-        {
+    let mut permissions: Option<u32> = None;
+
+    let mut i = 1;
+    while i < args.len() {
+        let arg = &args[i];
+
+        // Check if it's a permission tag (e.g., -700)
+        if arg.starts_with("-") && arg.len() > 1 && arg.chars().nth(1).unwrap().is_numeric() {
+            // Parse the permission octal value
+            if let Ok(perm) = u32::from_str_radix(&arg[1..], 8) {
+                permissions = Some(perm);
+            } else {
+                eprintln!("\x1b[1;31mInvalid permission format: {}\x1b[0m", arg);
+            }
+        }
+        // If the argument starts with -- or a single - and is not a number, it's a flag
+        else if arg.starts_with("--") || (arg.starts_with("-") && arg.len() > 1) {
             flags.push(arg.clone());
         } else {
             dirs.push(arg.clone());
         }
+
+        i += 1;
     }
 
     if dirs.is_empty() {
@@ -61,6 +77,25 @@ fn main() {
                     full_path.display()
                 ),
                 Err(_) => println!("\x1b[1;33mCreated directory:\x1b[0m {}", dir),
+            }
+        }
+
+        // Set permissions if specified
+        if let Some(mode) = permissions {
+            match fs::metadata(&dir) {
+                Ok(metadata) => {
+                    let mut perms = metadata.permissions();
+                    perms.set_mode(mode);
+                    if let Err(e) = fs::set_permissions(&dir, perms) {
+                        eprintln!(
+                            "\x1b[1;31mFailed to set permissions {} on {}:\x1b[0m {}",
+                            mode, dir, e
+                        );
+                    } else {
+                        println!("\x1b[1;32mSet permissions {:o} on {}\x1b[0m", mode, dir);
+                    }
+                }
+                Err(e) => eprintln!("\x1b[1;31mFailed to get metadata for {}:\x1b[0m {}", dir, e),
             }
         }
 

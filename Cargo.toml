@@ -14,7 +14,6 @@ exclude = ["tests"]
 [dependencies]
 
 [dev-dependencies]
-tempfile = "3.8" # Temporary directory creation for tests
 
 [[bin]]
 name = "makedir"

@@ -218,6 +218,7 @@ makedir provides several project initialization options:
 | `--yarn` | `-y` | Initialize a Yarn project |
 | `--pnpm` | `-p` | Initialize a pnpm project |
 | `--deno` | `-d` | Initialize a Deno project (deno.json) |
+| `-XXX` |  | Set directory permissions (octal format, e.g., -700, -755) |
 
 ## Configuration
 
