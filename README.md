@@ -62,12 +62,7 @@ cargo install makedir
 brew install soup-ms/tap/makedir
 ```
 
-### Debian/Ubuntu
-```bash
-# Download the latest .deb package from GitHub releases
-wget https://github.com/soup-ms/makedir/releases/download/v0.2.1/makedir_0.2.1_amd64.deb
-sudo apt install ./makedir_0.2.1_amd64.deb
-```
+
 
 makedir can be installed in a few easy steps:
 
@@ -79,17 +74,16 @@ makedir can be installed in a few easy steps:
    <details>
    <summary>Linux / WSL</summary>
 
-   > Using apt (Debian/Ubuntu):
-   >
-   > ```sh
-   > sudo apt update
-   > sudo apt install makedir
-   > ```
-   >
    > Using cargo:
    >
    > ```sh
    > cargo install makedir --locked
+   > ```
+   >
+   > Using Homebrew:
+   >
+   > ```sh
+   > brew install soup-ms/tap/makedir
    > ```
    >
    > Or, use the install script:
