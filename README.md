@@ -93,7 +93,7 @@ makedir can be installed in a few easy steps:
    > Or, use the install script:
    >
    > ```sh
-   > curl -sSfL https://raw.githubusercontent.com/soup-ms/makedir/main/install.sh | sh
+   > curl -sSfL https://raw.githubusercontent.com/soup-ms/makedir/master/install.sh | sh
    > ```
 
    </details>
@@ -117,7 +117,7 @@ makedir can be installed in a few easy steps:
    > Or, use the install script:
    >
    > ```sh
-   > curl -sSfL https://raw.githubusercontent.com/soup-ms/makedir/main/install.sh | sh
+   > curl -sSfL https://raw.githubusercontent.com/soup-ms/makedir/master/install.sh | sh
    > ```
 
    </details>
@@ -137,7 +137,7 @@ makedir can be installed in a few easy steps:
    > If you're using Cygwin, Git Bash, or MSYS2, you can also use the install script:
    >
    > ```sh
-   > curl -sSfL https://raw.githubusercontent.com/soup-ms/makedir/main/install.sh | sh
+   > curl -sSfL https://raw.githubusercontent.com/soup-ms/makedir/master/install.sh | sh
    > ```
 
    </details>
