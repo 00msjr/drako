@@ -86,7 +86,7 @@ makedir can be installed in a few easy steps:
    > Using Homebrew:
    >
    > ```sh
-   > brew install soup-ms/tap/makedir
+   > brew install soup-ms/makedir/makedir
    > ```
    >
    > Or, use the install script:
