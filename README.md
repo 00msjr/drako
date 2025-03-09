@@ -64,7 +64,7 @@ cargo install makedir
 ### Using Homebrew
 
 ```bash
-brew install soup-ms/tap/makedir
+brew install soup-ms/makedir/makedir
 ```
 
 makedir can be installed in a few easy steps:
