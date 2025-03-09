@@ -12,7 +12,6 @@
 # makedir
 
 [![crates.io](https://img.shields.io/crates/v/makedir?logo=rust&logoColor=white&style=flat-square)](https://crates.io/crates/makedir)
-[![Downloads](https://img.shields.io/github/downloads/soup-ms/makedir/total?logo=github&logoColor=white&style=flat-square)](https://github.com/soup-ms/makedir/releases)
 
 makedir is a **better directory creation tool**.
 
