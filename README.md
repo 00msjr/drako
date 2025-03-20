@@ -278,7 +278,7 @@ makedir can be integrated with various tools and workflows:
 
 The following items outline our development plan for evolving makedir into a more powerful directory creation and management tool:
 
-### Version 1.0.0 Release Plan
+### Version 1.0.0 Roadmap
 
 - [ ] Rename project from "makedir" to "drako" for better branding
 - [ ] Code optimization and refactoring
