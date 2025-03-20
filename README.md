@@ -274,6 +274,28 @@ makedir can be integrated with various tools and workflows:
 | CI/CD pipelines   | Create project structures         | Include in workflow scripts |
 | Project templates | Standardize project setup         | Combine with template tools |
 
+## Roadmap
+
+The following items outline our development plan for evolving makedir into a more powerful directory creation and management tool:
+
+### Version 1.0.0 Release Plan
+
+- [ ] Rename project from "makedir" to "drako" for better branding
+- [ ] Code optimization and refactoring
+  - [ ] Separate functions into individual files for better maintainability
+  - [ ] Implement proper module imports for features (-l, -r, -do, etc.)
+  - [ ] Standardize code formatting across the codebase
+- [ ] Command improvements
+  - [ ] Add comprehensive `--help` documentation
+  - [ ] Implement `--cd` flag to automatically change into created directory
+  - [ ] Support `mkdir -p "$1" && cd "$1"` pattern for nested directory creation
+- [ ] Feature enhancements
+  - [ ] Add directory tree creation (e.g., `drako testdir(src, public, tests)`)
+  - [ ] Implement password protection for directories
+- [ ] Distribution
+  - [ ] Submit PR to homebrew-core for official distribution
+  - [ ] Reorganize project structure with homebrew file in main directory
+
 ## Contributing
 
 Contributions are welcome! To contribute:
