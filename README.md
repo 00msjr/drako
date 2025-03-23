@@ -9,15 +9,15 @@
 
 <div align="center">
 
-# makedir
+# drako
 
-[![crates.io](https://img.shields.io/crates/v/makedir?logo=rust&logoColor=white&style=flat-square)](https://crates.io/crates/makedir)
+[![crates.io](https://img.shields.io/crates/v/drako?logo=rust&logoColor=white&style=flat-square)](https://crates.io/crates/makedir)
 
-makedir is a **better directory creation tool**.
+drako is a **better directory creation tool**.
 
-Makedir creates directories with project initialization options, so you can set up
+drako creates directories with project initialization options, so you can set up
 new projects in just a few keystrokes.<br />
-makedir works on all major operating systems and is written in Rust 🦀.
+drako works on all major operating systems and is written in Rust 🦀.
 
 [Getting started](#getting-started) •
 [Installation](#installation) •
@@ -29,24 +29,24 @@ makedir works on all major operating systems and is written in Rust 🦀.
 ## Getting started
 
 ```sh
-makedir myproject                  # Create a simple directory
-makedir myproject --git            # Create a directory and initialize git
-makedir myproject --git --readme   # Create a directory with git and README.md
-makedir project1 project2 --npm    # Create multiple directories with npm init
-makedir myproject -755             # Create a directory with permissions set to 755
-makedir myproject --verbose        # Create a directory with verbose output
+drako myproject                  # Create a simple directory
+drako myproject --git            # Create a directory and initialize git
+drako myproject --git --readme   # Create a directory with git and README.md
+drako project1 project2 --npm    # Create multiple directories with npm init
+drako myproject -755             # Create a directory with permissions set to 755
+drako myproject --verbose        # Create a directory with verbose output
 
 # Use short flags for convenience
-makedir myproject -g -r            # Same as --git --readme
-makedir myproject -v -755          # Create with verbose output and permissions 755
+drako myproject -g -r            # Same as --git --readme
+drako myproject -v -755          # Create with verbose output and permissions 755
 ```
 
 Create an alias for even faster usage:
 
 ```sh
 # Add to your shell config file (.bashrc, .zshrc, etc.)
-alias md='makedir'
-alias mdv='makedir -v'             # Always use verbose output
+alias md='drako'
+alias mdv='drako -v'             # Always use verbose output
 
 # Then use it like this:
 md newproject -g -r                # Create directory with git and README
@@ -58,21 +58,21 @@ mdv newproject -g -755             # Create with git, verbose output and permiss
 ### Using Cargo
 
 ```bash
-cargo install makedir
+cargo install drako
 ```
 
 ### Using Homebrew
 
 ```bash
-brew install soup-ms/makedir/makedir
+brew install soup-ms/drako/makedir
 ```
 
-makedir can be installed in a few easy steps:
+drako can be installed in a few easy steps:
 
 1. **Install binary**
 
-   makedir runs on most major platforms. If your platform isn't listed below,
-   please [open an issue](https://github.com/soup-ms/makedir/issues).
+   drako runs on most major platforms. If your platform isn't listed below,
+   please [open an issue](https://github.com/soup-ms/drako/issues).
 
    <details>
    <summary>Linux / WSL</summary>
@@ -80,19 +80,19 @@ makedir can be installed in a few easy steps:
    > Using cargo:
    >
    > ```sh
-   > cargo install makedir --locked
+   > cargo install drako --locked
    > ```
    >
    > Using Homebrew:
    >
    > ```sh
-   > brew install soup-ms/makedir/makedir
+   > brew install soup-ms/drako/makedir
    > ```
    >
    > Or, use the install script:
    >
    > ```sh
-   > curl -sSfL https://raw.githubusercontent.com/soup-ms/makedir/master/install.sh | sh
+   > curl -sSfL https://raw.githubusercontent.com/soup-ms/drako/master/install.sh | sh
    > ```
 
    </details>
@@ -103,20 +103,20 @@ makedir can be installed in a few easy steps:
    > Using Homebrew:
    >
    > ```sh
-   > brew tap soup-ms/makedir
-   > brew install makedir
+   > brew tap soup-ms/drako
+   > brew install drako
    > ```
    >
    > Using cargo:
    >
    > ```sh
-   > cargo install makedir --locked
+   > cargo install drako --locked
    > ```
    >
    > Or, use the install script:
    >
    > ```sh
-   > curl -sSfL https://raw.githubusercontent.com/soup-ms/makedir/master/install.sh | sh
+   > curl -sSfL https://raw.githubusercontent.com/soup-ms/drako/master/install.sh | sh
    > ```
 
    </details>
@@ -124,26 +124,26 @@ makedir can be installed in a few easy steps:
    <details>
    <summary>Windows</summary>
 
-   > makedir works with PowerShell, as well as shells running in Cygwin, Git
+   > drako works with PowerShell, as well as shells running in Cygwin, Git
    > Bash, and MSYS2.
    >
-   > The recommended way to install makedir is via cargo:
+   > The recommended way to install drako is via cargo:
    >
    > ```sh
-   > cargo install makedir --locked
+   > cargo install drako --locked
    > ```
    >
    > If you're using Cygwin, Git Bash, or MSYS2, you can also use the install script:
    >
    > ```sh
-   > curl -sSfL https://raw.githubusercontent.com/soup-ms/makedir/master/install.sh | sh
+   > curl -sSfL https://raw.githubusercontent.com/soup-ms/drako/master/install.sh | sh
    > ```
 
    </details>
 
 2. **Setup aliases** (optional)
 
-   To make makedir even more convenient, add aliases to your shell configuration.
+   To make drako even more convenient, add aliases to your shell configuration.
 
    <details>
    <summary>Bash</summary>
@@ -152,15 +152,15 @@ makedir can be installed in a few easy steps:
    >
    > ```sh
    > # Basic alias
-   > alias md='makedir'
+   > alias md='drako'
    >
    > # Aliases with common options
-   > alias mdg='makedir --git'
-   > alias mdr='makedir --readme'
-   > alias mdgr='makedir --git --readme'
+   > alias mdg='drako --git'
+   > alias mdr='drako --readme'
+   > alias mdgr='drako --git --readme'
    >
    > # For shell completion (if available)
-   > eval "$(makedir --completion bash)"
+   > eval "$(drako --completion bash)"
    > ```
 
    </details>
@@ -172,15 +172,15 @@ makedir can be installed in a few easy steps:
    >
    > ```sh
    > # Basic alias
-   > alias md='makedir'
+   > alias md='drako'
    >
    > # Aliases with common options
-   > alias mdg='makedir --git'
-   > alias mdr='makedir --readme'
-   > alias mdgr='makedir --git --readme'
+   > alias mdg='drako --git'
+   > alias mdr='drako --readme'
+   > alias mdgr='drako --git --readme'
    >
    > # For shell completion (if available)
-   > eval "$(makedir --completion zsh)"
+   > eval "$(drako --completion zsh)"
    > ```
 
    </details>
@@ -192,15 +192,15 @@ makedir can be installed in a few easy steps:
    >
    > ```sh
    > # Basic alias
-   > alias md='makedir'
+   > alias md='drako'
    >
    > # Aliases with common options
-   > alias mdg='makedir --git'
-   > alias mdr='makedir --readme'
-   > alias mdgr='makedir --git --readme'
+   > alias mdg='drako --git'
+   > alias mdr='drako --readme'
+   > alias mdgr='drako --git --readme'
    >
    > # For shell completion (if available)
-   > makedir --completion fish | source
+   > drako --completion fish | source
    > ```
 
    </details>
@@ -212,19 +212,19 @@ makedir can be installed in a few easy steps:
    >
    > ```powershell
    > # Basic alias
-   > Set-Alias -Name md -Value makedir
+   > Set-Alias -Name md -Value drako
    >
    > # Function aliases with common options
-   > function mdg { makedir --git $args }
-   > function mdr { makedir --readme $args }
-   > function mdgr { makedir --git --readme $args }
+   > function mdg { drako --git $args }
+   > function mdr { drako --readme $args }
+   > function mdgr { drako --git --readme $args }
    > ```
 
    </details>
 
 ## Features
 
-makedir provides several project initialization options:
+drako provides several project initialization options:
 
 | Flag        | Short  | Description                                                |
 | ----------- | ------ | ---------------------------------------------------------- |
@@ -250,23 +250,23 @@ You can create custom aliases with your most frequently used options:
 
 ```sh
 # For bash/zsh/fish
-alias mdweb='makedir --git --readme --npm'
-alias mdrust='makedir --git --readme --cargo'
-alias mdgo='makedir --git --readme --go'
+alias mdweb='drako --git --readme --npm'
+alias mdrust='drako --git --readme --cargo'
+alias mdgo='drako --git --readme --go'
 
 # For PowerShell
-function mdweb { makedir --git --readme --npm $args }
-function mdrust { makedir --git --readme --cargo $args }
-function mdgo { makedir --git --readme --go $args }
+function mdweb { drako --git --readme --npm $args }
+function mdrust { drako --git --readme --cargo $args }
+function mdgo { drako --git --readme --go $args }
 ```
 
 ### Environment variables
 
-Future versions of makedir may support environment variables for configuration.
+Future versions of drako may support environment variables for configuration.
 
 ## Third-party integrations
 
-makedir can be integrated with various tools and workflows:
+drako can be integrated with various tools and workflows:
 
 | Application       | Description                       | Integration                 |
 | ----------------- | --------------------------------- | --------------------------- |
@@ -276,11 +276,11 @@ makedir can be integrated with various tools and workflows:
 
 ## Roadmap
 
-The following items outline our development plan for evolving makedir into a more powerful directory creation and management tool:
+The following items outline our development plan for evolving drako into a more powerful directory creation and management tool:
 
 ### Version 1.0.0 Roadmap
 
-- [ ] Rename project from "makedir" to "drako" for better branding
+- [ ] Rename project from "drako" to "drako" for better branding
 - [ ] Code optimization and refactoring
   - [ ] Separate functions into individual files for better maintainability
   - [ ] Implement proper module imports for features (-l, -r, -do, etc.)

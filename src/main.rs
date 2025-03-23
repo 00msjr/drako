@@ -9,7 +9,7 @@ fn main() {
 
     if args.len() < 2 {
         let usage_message = "\
-\x1b[1;33mUsage:\x1b[0m makedir [directories] [options]
+\x1b[1;33mUsage:\x1b[0m drako [directories] [options]
 
 \x1b[1;33mHelp:\x1b[0m  Creates one or more directories with optional project initialization.
        Multiple directories can be specified, and options apply to all of them.
