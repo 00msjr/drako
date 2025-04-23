@@ -11,8 +11,7 @@
 
 # drako
 
-[![crates.io](https://img.shields.io/crates/v/drako?logo=rust&logoColor=white&style=flat-square)](https://crates.io/crates/makedir)
-
+[![crates.io](https://img.shields.io/crates/v/drako?logo=rust&logoColor=white&style=flat-square)](https://crates.io/crates/drako)
 drako is a **better directory creation tool**.
 
 drako creates directories with project initialization options, so you can set up
@@ -45,12 +44,12 @@ Create an alias for even faster usage:
 
 ```sh
 # Add to your shell config file (.bashrc, .zshrc, etc.)
-alias md='drako'
-alias mdv='drako -v'             # Always use verbose output
+alias dr='drako'
+alias drv='drako -v'             # Always use verbose output
 
 # Then use it like this:
-md newproject -g -r                # Create directory with git and README
-mdv newproject -g -755             # Create with git, verbose output and permissions 755
+dr newproject -g -r                # Create directory with git and README
+drv newproject -g -755             # Create with git, verbose output and permissions 755
 ```
 
 ## Installation
@@ -64,7 +63,7 @@ cargo install drako
 ### Using Homebrew
 
 ```bash
-brew install soup-ms/drako/makedir
+brew install soup-ms/tap/drako
 ```
 
 drako can be installed in a few easy steps:
@@ -74,8 +73,8 @@ drako can be installed in a few easy steps:
    drako runs on most major platforms. If your platform isn't listed below,
    please [open an issue](https://github.com/soup-ms/drako/issues).
 
-   <details>
-   <summary>Linux / WSL</summary>
+      <details>
+      <summary>Linux / WSL</summary>
 
    > Using cargo:
    >
@@ -86,7 +85,7 @@ drako can be installed in a few easy steps:
    > Using Homebrew:
    >
    > ```sh
-   > brew install soup-ms/drako/makedir
+   > brew install soup-ms/tap/drako
    > ```
    >
    > Or, use the install script:
@@ -95,10 +94,10 @@ drako can be installed in a few easy steps:
    > curl -sSfL https://raw.githubusercontent.com/soup-ms/drako/master/install.sh | sh
    > ```
 
-   </details>
+      </details>
 
-   <details>
-   <summary>macOS</summary>
+      <details>
+      <summary>macOS</summary>
 
    > Using Homebrew:
    >
@@ -119,10 +118,10 @@ drako can be installed in a few easy steps:
    > curl -sSfL https://raw.githubusercontent.com/soup-ms/drako/master/install.sh | sh
    > ```
 
-   </details>
+      </details>
 
-   <details>
-   <summary>Windows</summary>
+      <details>
+      <summary>Windows</summary>
 
    > drako works with PowerShell, as well as shells running in Cygwin, Git
    > Bash, and MSYS2.
@@ -139,7 +138,7 @@ drako can be installed in a few easy steps:
    > curl -sSfL https://raw.githubusercontent.com/soup-ms/drako/master/install.sh | sh
    > ```
 
-   </details>
+      </details>
 
 2. **Setup aliases** (optional)
 
@@ -280,7 +279,7 @@ The following items outline our development plan for evolving drako into a more 
 
 ### Version 1.0.0 Roadmap
 
-- [ ] Rename project from "drako" to "drako" for better branding
+- [ ] Rename project from "makedir" to "drako" for better branding
 - [ ] Code optimization and refactoring
   - [ ] Separate functions into individual files for better maintainability
   - [ ] Implement proper module imports for features (-l, -r, -do, etc.)
