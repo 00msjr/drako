@@ -63,7 +63,7 @@ cargo install drako
 ### Using Homebrew
 
 ```bash
-brew install soup-ms/tap/drako
+brew install 00msjr/tap/drako
 ```
 
 drako can be installed in a few easy steps:
@@ -71,7 +71,7 @@ drako can be installed in a few easy steps:
 1. **Install binary**
 
    drako runs on most major platforms. If your platform isn't listed below,
-   please [open an issue](https://github.com/soup-ms/drako/issues).
+   please [open an issue](https://github.com/00msjr/drako/issues).
 
       <details>
       <summary>Linux / WSL</summary>
@@ -85,13 +85,13 @@ drako can be installed in a few easy steps:
    > Using Homebrew:
    >
    > ```sh
-   > brew install soup-ms/tap/drako
+   > brew install 00msjr/tap/drako
    > ```
    >
    > Or, use the install script:
    >
    > ```sh
-   > curl -sSfL https://raw.githubusercontent.com/soup-ms/drako/master/install.sh | sh
+   > curl -sSfL https://raw.githubusercontent.com/00msjr/drako/master/install.sh | sh
    > ```
 
       </details>
@@ -102,7 +102,7 @@ drako can be installed in a few easy steps:
    > Using Homebrew:
    >
    > ```sh
-   > brew tap soup-ms/drako
+   > brew tap 00msjr/drako
    > brew install drako
    > ```
    >
@@ -115,7 +115,7 @@ drako can be installed in a few easy steps:
    > Or, use the install script:
    >
    > ```sh
-   > curl -sSfL https://raw.githubusercontent.com/soup-ms/drako/master/install.sh | sh
+   > curl -sSfL https://raw.githubusercontent.com/00msjr/drako/master/install.sh | sh
    > ```
 
       </details>
@@ -135,7 +135,7 @@ drako can be installed in a few easy steps:
    > If you're using Cygwin, Git Bash, or MSYS2, you can also use the install script:
    >
    > ```sh
-   > curl -sSfL https://raw.githubusercontent.com/soup-ms/drako/master/install.sh | sh
+   > curl -sSfL https://raw.githubusercontent.com/00msjr/drako/master/install.sh | sh
    > ```
 
       </details>

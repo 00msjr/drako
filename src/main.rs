@@ -242,7 +242,7 @@ fn main() {
                         ```\n\n\
                         ## Authors\n\n\
                         Contributors names and contact info\n\
-                        ex. [@soup-ms](https://github.com/soup-ms)\n\n\
+                        ex. [@00msjr](https://github.com/soup-ms)\n\n\
                         ## Version History\n\n\
                         * v0.2.0\n\
                             * Various bug fixes and optimizations\n\
