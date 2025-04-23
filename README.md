@@ -12,6 +12,7 @@
 # drako
 
 [![crates.io](https://img.shields.io/crates/v/drako?logo=rust&logoColor=white&style=flat-square)](https://crates.io/crates/drako)
+
 drako is a **better directory creation tool**.
 
 drako creates directories with project initialization options, so you can set up
