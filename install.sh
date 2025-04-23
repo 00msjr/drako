@@ -21,16 +21,15 @@ if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
 fi
 
 echo "Checking for latest version..."
-LATEST_VERSION=$(curl -sSfL https://api.github.com/repos/soup-ms/drako/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+LATEST_VERSION=$(curl -sSfL https://api.github.com/repos/00msjr/drako/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
 echo "Latest version: $LATEST_VERSION"
 
-echo "Downloading https://github.com/soup-ms/drako/releases/download/$LATEST_VERSION/makedir..."
-curl -sSfL -o /tmp/drako "https://github.com/soup-ms/makedir/releases/download/$LATEST_VERSION/makedir"
+echo "Downloading https://github.com/00msjr/drako/releases/download/$LATEST_VERSION/drako..."
+curl -sSfL -o /tmp/drako "https://github.com/00msjr/drako/releases/download/$LATEST_VERSION/makedir"
 
 echo "Installing to ~/.local/bin..."
-mv /tmp/drako ~/.local/bin/makedir
+mv /tmp/drako ~/.local/bin/drako
 chmod +x ~/.local/bin/drako
 
 echo "drako was installed successfully!"
 echo "You may need to restart your terminal or run 'source ~/.zshrc' (or equivalent) to use drako."
-

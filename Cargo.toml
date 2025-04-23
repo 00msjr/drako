@@ -1,11 +1,11 @@
 [package]
-name = "makedir"
-version = "0.2.2"
+name = "drako"
+version = "1.0.0"
 edition = "2021"
-authors = ["soup-ms <michaelsousajr@gmail.com>"]
+authors = ["00msjr <michaelsousajr@gmail.com>"]
 description = "A better mkdir command with project setup automation."
 license = "MIT"
-repository = "https://github.com/soup-ms/makedir"
+repository = "https://github.com/00msjr/drako"
 readme = "README.md"
 keywords = ["mkdir", "directory", "automation", "cli"]
 categories = ["command-line-utilities"]
@@ -16,5 +16,5 @@ exclude = ["tests"]
 [dev-dependencies]
 
 [[bin]]
-name = "makedir"
+name = "drako"
 path = "src/main.rs"
