@@ -25,7 +25,7 @@ LATEST_VERSION=$(curl -sSfL https://api.github.com/repos/00msjr/drako/releases/l
 echo "Latest version: $LATEST_VERSION"
 
 echo "Downloading https://github.com/00msjr/drako/releases/download/$LATEST_VERSION/drako..."
-curl -sSfL -o /tmp/drako "https://github.com/00msjr/drako/releases/download/$LATEST_VERSION/makedir"
+curl -sSfL -o /tmp/drako "https://github.com/00msjr/drako/releases/download/$LATEST_VERSION/drako"
 
 echo "Installing to ~/.local/bin..."
 mv /tmp/drako ~/.local/bin/drako

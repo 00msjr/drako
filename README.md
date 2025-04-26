@@ -280,8 +280,8 @@ The following items outline our development plan for evolving drako into a more 
 
 ### Version 1.0.0 Roadmap
 
-- [ ] Rename project from "makedir" to "drako" for better branding
-- [ ] Code optimization and refactoring
+- [x] Rename project from "makedir" to "drako" for better branding
+- [x] Code optimization and refactoring
   - [ ] Separate functions into individual files for better maintainability
   - [ ] Implement proper module imports for features (-l, -r, -do, etc.)
   - [ ] Standardize code formatting across the codebase
