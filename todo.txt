@@ -1,0 +1,5 @@
+nest dirs this drako testdir[nest1,nest2,nest3]
+init colors at top of file
+fix formatting of output text in files
+--help tag
+message that says if user types makedir tell them its now drako 

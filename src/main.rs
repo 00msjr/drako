@@ -3,33 +3,21 @@ use std::fs;
 use std::os::unix::fs::PermissionsExt;
 use std::path::Path;
 use std::process::Command;
+mod messages;
+// mod init;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
 
     if args.len() < 2 {
-        let usage_message = "\
-\x1b[1;33mUsage:\x1b[0m drako [directories] [options]
-
-\x1b[1;33mHelp:\x1b[0m  Creates one or more directories with optional project initialization.
-       Multiple directories can be specified, and options apply to all of them.
-
-\x1b[1;33mOptions:\x1b[0m
-    \x1b[32m--git,     -g\x1b[0m         Initialize a Git repository.
-    \x1b[32m--readme,  -r\x1b[0m         Generate a template README.md file.
-    \x1b[32m--license, -l\x1b[0m         Generate a template MIT License file.
-    \x1b[32m--docker,  -do\x1b[0m        Generate a template Docker file.
-    \x1b[32m--go,      -go\x1b[0m        Initialize a Go project.
-    \x1b[32m--cargo,   -c\x1b[0m         Initialize a Rust Cargo project.
-    \x1b[32m--npm,     -n\x1b[0m         Initialize an npm project (package.json).
-    \x1b[32m--bun,     -b\x1b[0m         Initialize a Bun project.
-    \x1b[32m--yarn,    -y\x1b[0m         Initialize a Yarn project.
-    \x1b[32m--pnpm,    -p\x1b[0m         Initialize a pnpm project.
-    \x1b[32m--deno,    -d\x1b[0m         Initialize a Deno project (deno.json).
-    \x1b[32m--verbose, -v\x1b[0m         Show detailed output from commands.
-    \x1b[32m           -###\x1b[0m       Set directory permissions (octal format, e.g., -700, -755).
-";
-        eprintln!("{}", usage_message);
+        messages::usage_message();
+        std::process::exit(1);
+    }
+    
+    // Check for --help or -h flag
+    if args.contains(&"--help".to_string()) || args.contains(&"-h".to_string()) {
+        messages::help_message();
+        // return;  // Exit early after printing help
         std::process::exit(1);
     }
 
@@ -45,17 +33,16 @@ fn main() {
 
         if arg.starts_with("-") {
             // Check if it's a permission tag (e.g., -700)
-            if arg.len() > 1 && arg.chars().nth(1).unwrap().is_numeric() {
+            if let Some(perm_str) = arg.strip_prefix('-') {
                 // Validate permission format (must be 3 digits between 000-777)
-                let perm_str = &arg[1..];
-                if perm_str.len() <= 3 && perm_str.chars().all(|c| c >= '0' && c <= '7') {
+                if perm_str.len() <= 3 && perm_str.chars().all(|c| ('0'..='7').contains(&c)) {
                     if let Ok(perm) = u32::from_str_radix(perm_str, 8) {
                         permissions = Some(perm);
                     } else {
-                        eprintln!("\x1b[1;31mInvalid permission format: {}\x1b[0m", arg);
+                    messages::error_message("Invalid permission format", Some(arg));
                     }
                 } else {
-                    eprintln!("\x1b[1;31mInvalid permission format: {}. Must be 3 octal digits (000-777).\x1b[0m", arg);
+                    messages::error_message("Invalid permission format", Some(arg));
                 }
             }
             // Check for verbose flag
@@ -75,20 +62,21 @@ fn main() {
     }
 
     if dirs.is_empty() {
-        eprintln!("\x1b[1;31mNo directories provided.\x1b[0m");
+        messages::error_message("No directories provided", None);
         std::process::exit(1);
     }
 
     // Process each directory
-    for dir in dirs {
+    for dir in &dirs {
         let path = Path::new(&dir);
         if path.exists() {
-            println!("\x1b[1;33mDirectory already exists:\x1b[0m {}", dir);
-        } else if let Err(e) = fs::create_dir_all(&dir) {
+            // println!("\x1b[1;33mDirectory already exists:\x1b[0m {}", dir);
+            messages::warning_message("Directory already exists", Some(dir));
+        } else if let Err(e) = fs::create_dir_all(dir) {
             eprintln!("\x1b[1;31mFailed to create directory {}:\x1b[0m {}", dir, e);
             continue;
         } else if verbose {
-            match std::fs::canonicalize(&dir) {
+            match std::fs::canonicalize(dir) {
                 Ok(full_path) => println!(
                     "\x1b[1;33mCreating directory:\x1b[0m {}",
                     full_path.display()
@@ -268,7 +256,7 @@ fn main() {
                     }
                 }
                 "--license" | "-l" => {
-                    let license_content = format!(
+                    let license_content = 
                         "MIT License\n\n\
                         Copyright (c) [YEAR] [YOUR NAME]\n\n\
                         Permission is hereby granted, free of charge, to any person obtaining a copy\n\
@@ -286,9 +274,9 @@ fn main() {
                         LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n\
                         OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n\
                         SOFTWARE.\n"
-                    );
+                    ;
 
-                    if let Err(e) = fs::write(dir_path.join("LICENSE"), &license_content) {
+                    if let Err(e) = fs::write(dir_path.join("LICENSE"), license_content) {
                         eprintln!(
                             "\x1b[1;31mFailed to create LICENSE file in {}:\x1b[0m {}",
                             dir, e
