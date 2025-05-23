@@ -3,3 +3,7 @@ init colors at top of file
 fix formatting of output text in files
 --help tag
 message that says if user types makedir tell them its now drako 
+name: maki
+make files and dirs, add --file flag
+password protect folders?
+add mkdir && cd command
