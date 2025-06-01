@@ -3,29 +3,41 @@ pub const RED: &str = "\x1b[1;31m";
 pub const GREEN: &str = "\x1b[1;32m";
 pub const RESET: &str = "\x1b[0m";
 
-pub fn usage_message() {
+pub fn usage() {
     eprintln!("{}Usage: drako new_directory [options]...", YELLOW);
 }
 
-pub fn error_message(input: &str, arg: Option<&str>) {
+pub fn success(input: &str, arg: Option<&str>) {
     match arg {
-        Some(arg) => eprintln!("{}Error:{} {} {}", RED, RESET, input, arg),
-        None => eprintln!("{}Error:{} {}", RED, RESET, input), // Handle the case when arg is None
+        Some(arg) => eprintln!("{}Success: {} {}", GREEN, input, arg),
+        None => eprintln!("{}Success: {}", YELLOW, input),
     }
 }
 
-pub fn warning_message(input: &str, arg: Option<&str>) {
+pub fn warning(input: &str, arg: Option<&str>) {
     match arg {
         Some(arg) => eprintln!("{}Warning: {} {}", YELLOW, input, arg),
         None => eprintln!("{}Warning: {}", YELLOW, input),
     }
 }
 
-pub fn success_message() {}
+pub fn error(input: &str, arg: Option<&str>) {
+    match arg {
+        Some(arg) => eprintln!("{}Error:{} {} {}", RED, RESET, input, arg),
+        None => eprintln!("{}Error:{} {}", RED, RESET, input), // Handle the case when arg is None
+    }
+}
 
-pub fn help_message() {
+pub fn verbose(input: &str, arg: Option<&str>) {
+    match arg {
+        Some(arg) => eprintln!("{} {} {} {}", YELLOW, RESET, input, arg),
+        None => eprintln!("{} {} {}", YELLOW, RESET, input), // Handle the case when arg is None
+    }
+}
+
+pub fn help() {
     let help_message = format!(
-        "{YELLOW}Usage:{RESET} drako [directories] [options]
+        "{YELLOW}Usage:{RESET} drako [directories] [options]...
 
 {YELLOW}Help:{RESET}  Creates one or more directories with optional project initialization.
     Multiple directories can be specified, and options apply to all of them.
@@ -45,6 +57,7 @@ pub fn help_message() {
     {GREEN}--verbose, -v{RESET}         Show detailed output from commands.
     {GREEN}           -### {RESET}      Set directory permissions (octal format, e.g., -700, -755).
     {GREEN}--help     -h{RESET}         Display this help message.
+    {GREEN}--version    {RESET}         Display version.
 ",
     );
 
