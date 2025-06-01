@@ -1,7 +1,12 @@
-edit to make a superset of mkdir
-nest dirs this drako testdir[nest1,nest2,nest3]
+TODO:
+drako => maki
 fix formatting of output text in files
-name: maki
-make files and dirs, add --file flag
-password protect folders?
-add mkdir && cd command
+modulate
+
+HACK:
+--cd
+password protect
+
+Maki: turn into superset of touch and mkdir and touch
+all flags from mkdir and touch, reverse compatible
+testfile testfolder/

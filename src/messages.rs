@@ -5,7 +5,7 @@ pub const RESET: &str = "\x1b[0m";
 
 pub fn version() {
     const VERSION: &str = env!("CARGO_PKG_VERSION");
-    eprintln!("drako {}",VERSION);
+    eprintln!("drako {}", VERSION);
 }
 
 pub fn usage() {

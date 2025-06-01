@@ -4,26 +4,29 @@ use std::os::unix::fs::PermissionsExt;
 use std::path::Path;
 use std::process::Command;
 mod messages;
+use messages::*;
 mod init;
+use init::*;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
 
     if args.len() < 2 {
-        messages::usage();
+        usage();
         std::process::exit(0);
     }
-    
+
     // Check for --help or -h flag
     if args.contains(&"--help".to_string()) || args.contains(&"-h".to_string()) {
-        messages::help();
+        help();
         std::process::exit(0);
     }
 
     if args.contains(&"--version".to_string()) {
-        messages::version();
+        version();
         std::process::exit(0);
-    }
+    } 
+
     
     // Separate directory names from flags and permissions
     let mut dirs: Vec<String> = Vec::new();
@@ -55,10 +58,10 @@ fn main() {
                     if let Ok(perm) = u32::from_str_radix(perm_str, 8) {
                         permissions = Some(perm);
                     } else {
-                        messages::error("Invalid permission format", Some(arg));
+                        error("Invalid permission format", Some(arg));
                     }
                 } else {
-                    messages::error("Invalid permission format", Some(arg));
+                    error("Invalid permission format", Some(arg));
                 }
             }
             // It's an unknown flag
@@ -74,7 +77,7 @@ fn main() {
     }
 
     if dirs.is_empty() {
-        messages::error("No directories provided", None);
+        error("No directories provided", None);
         std::process::exit(0);
     }
 
@@ -82,20 +85,21 @@ fn main() {
     for dir in &dirs {
         let path = Path::new(&dir);
         if path.exists() {
-            // println!("\x1b[1;33mDirectory already exists:\x1b[0m {}", dir);
-            messages::warning("Directory already exists", Some(dir));
-        } else if let Err(e) = fs::create_dir_all(dir) {
-            messages::error("Failed to create directory", Some(dir));
-            // eprintln!("\x1b[1;31mFailed to create directory {}:\x1b[0m {}", dir, e);
-            continue;
-        } else if verbose {
-            match std::fs::canonicalize(dir) {
-                Ok(full_path) => println!(
-                    // messages::success("Creating Directory", None),
-                    "\x1b[1;33mCreating directory:\x1b[0m {}",
-                    full_path.display()
-                ),
-                Err(_) => println!("\x1b[1;33mCreating directory:\x1b[0m {}", dir),
+            warning("Directory already exists", Some(dir));
+        } else {
+            match fs::create_dir_all(dir) {
+                Ok(_) => {
+                    if verbose {
+                        match std::fs::canonicalize(dir) {
+                            Ok(full_path) => success("Creating directory", Some(&full_path.display().to_string())),
+                            Err(_) => success("Creating directory", Some(dir)),
+                        }
+                    }
+                }
+                Err(_) => {
+                    error("Failed to create directory", Some(dir));
+                    continue;
+                }
             }
         }
 
@@ -112,7 +116,7 @@ fn main() {
                         );
                     } else if verbose {
                         //FIX:
-                        // messages::verbose("Set permissions {:o} on {}", None);
+                        // verbose("Set permissions {:o} on {}", None);
                         println!("\x1b[1;32mSet permissions {:o} on {}\x1b[0m", mode, dir);
                     }
                 }
