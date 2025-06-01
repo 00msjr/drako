@@ -3,6 +3,11 @@ pub const RED: &str = "\x1b[1;31m";
 pub const GREEN: &str = "\x1b[1;32m";
 pub const RESET: &str = "\x1b[0m";
 
+pub fn version() {
+    const VERSION: &str = env!("CARGO_PKG_VERSION");
+    eprintln!("drako {}",VERSION);
+}
+
 pub fn usage() {
     eprintln!("{}Usage: drako new_directory [options]...", YELLOW);
 }

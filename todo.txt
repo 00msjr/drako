@@ -1,5 +1,5 @@
+edit to make a superset of mkdir
 nest dirs this drako testdir[nest1,nest2,nest3]
-init colors at top of file
 fix formatting of output text in files
 name: maki
 make files and dirs, add --file flag

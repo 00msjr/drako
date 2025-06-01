@@ -20,6 +20,11 @@ fn main() {
         std::process::exit(0);
     }
 
+    if args.contains(&"--version".to_string()) {
+        messages::version();
+        std::process::exit(0);
+    }
+    
     // Separate directory names from flags and permissions
     let mut dirs: Vec<String> = Vec::new();
     let mut flags: Vec<String> = Vec::new();
@@ -31,24 +36,32 @@ fn main() {
         let arg = &args[i];
 
         if arg.starts_with("-") {
+            // First check if it's a known flag
+            if arg == "--verbose" || arg == "-v" {
+                verbose = true;
+            }
+            // Check if it's a double-dash flag (like --git)
+            else if arg.starts_with("--") {
+                flags.push(arg.clone());
+            }
+            // Check if it's a single-dash flag (like -g)
+            else if arg.len() > 1 && !arg.chars().nth(1).unwrap().is_digit(10) {
+                flags.push(arg.clone());
+            }
             // Check if it's a permission tag (e.g., -700)
-            if let Some(perm_str) = arg.strip_prefix('-') {
+            else if let Some(perm_str) = arg.strip_prefix('-') {
                 // Validate permission format (must be 3 digits between 000-777)
                 if perm_str.len() <= 3 && perm_str.chars().all(|c| ('0'..='7').contains(&c)) {
                     if let Ok(perm) = u32::from_str_radix(perm_str, 8) {
                         permissions = Some(perm);
                     } else {
-                    messages::error("Invalid permission format", Some(arg));
+                        messages::error("Invalid permission format", Some(arg));
                     }
                 } else {
                     messages::error("Invalid permission format", Some(arg));
                 }
             }
-            // Check for verbose flag
-            else if arg == "--verbose" || arg == "-v" {
-                verbose = true;
-            }
-            // It's a regular action flag
+            // It's an unknown flag
             else {
                 flags.push(arg.clone());
             }
