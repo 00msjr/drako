@@ -2,7 +2,7 @@ use std::fs;
 use std::os::unix::fs::PermissionsExt;
 use std::path::Path;
 use std::process::Command;
-/* use tempfile::tempdir; */
+use tempfile::tempdir;
 
 #[cfg(test)]
 mod advanced_integration_tests {
