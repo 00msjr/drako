@@ -2,34 +2,66 @@
 
 set -e
 
-# Create .local/bin directory if it doesn't exist
-mkdir -p ~/.local/bin
+# config
+REPO="00msjr/drako"
+INSTALL_DIR="$HOME/.local/bin"
+BINARY_NAME="drako"
 
-# Check if ~/.local/bin is in PATH
-if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
-  echo "Adding ~/.local/bin to PATH in your shell profile"
-  # Determine shell and add to appropriate profile
+# requirements
+for cmd in curl grep sed; do
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    echo "Error: $cmd is required but not installed"
+    exit 1
+  fi
+done
+
+# create install directory
+mkdir -p "$INSTALL_DIR"
+
+# add to PATH
+if [[ ":$PATH:" != *":$INSTALL_DIR:"* ]]; then
+  echo "Adding $INSTALL_DIR to PATH"
   if [[ -n "$ZSH_VERSION" ]]; then
     echo 'export PATH="$HOME/.local/bin:$PATH"' >>~/.zshrc
-    echo "Added to ~/.zshrc. Please run 'source ~/.zshrc' after installation."
+    echo "Added to ~/.zshrc"
   elif [[ -n "$BASH_VERSION" ]]; then
     echo 'export PATH="$HOME/.local/bin:$PATH"' >>~/.bashrc
-    echo "Added to ~/.bashrc. Please run 'source ~/.bashrc' after installation."
+    echo "Added to ~/.bashrc"
   else
-    echo "Please add ~/.local/bin to your PATH manually."
+    echo 'export PATH="$HOME/.local/bin:$PATH"' >>~/.profile
+    echo "Added to ~/.profile"
   fi
 fi
 
-echo "Checking for latest version..."
-LATEST_VERSION=$(curl -sSfL https://api.github.com/repos/00msjr/drako/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
-echo "Latest version: $LATEST_VERSION"
+# get latest version
+echo "Fetching latest version..."
+VERSION=$(curl -sSfL "https://api.github.com/repos/$REPO/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+if [ -z "$VERSION" ]; then
+  echo "Error: Could not fetch latest version"
+  exit 1
+fi
+echo "Latest version: $VERSION"
 
-echo "Downloading https://github.com/00msjr/drako/releases/download/$LATEST_VERSION/drako..."
-curl -sSfL -o /tmp/drako "https://github.com/00msjr/drako/releases/download/$LATEST_VERSION/drako"
+# download binary
+echo "Downloading $BINARY_NAME..."
+DOWNLOAD_URL="https://github.com/$REPO/releases/download/$VERSION/$BINARY_NAME"
+TEMP_FILE="/tmp/$BINARY_NAME"
 
-echo "Installing to ~/.local/bin..."
-mv /tmp/drako ~/.local/bin/drako
-chmod +x ~/.local/bin/drako
+if ! curl -sSfL -o "$TEMP_FILE" "$DOWNLOAD_URL"; then
+  echo "Error: Failed to download binary"
+  exit 1
+fi
 
-echo "drako was installed successfully!"
-echo "You may need to restart your terminal or run 'source ~/.zshrc' (or equivalent) to use drako."
+# install binary
+echo "Installing to $INSTALL_DIR..."
+mv "$TEMP_FILE" "$INSTALL_DIR/$BINARY_NAME"
+chmod +x "$INSTALL_DIR/$BINARY_NAME"
+
+# verify installation
+if [ -x "$INSTALL_DIR/$BINARY_NAME" ]; then
+  echo "Successfully installed $BINARY_NAME!"
+  echo "Restart your terminal or run 'source ~/.bashrc' to use $BINARY_NAME"
+else
+  echo "Error: Installation failed"
+  exit 1
+fi
