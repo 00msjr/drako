@@ -1,18 +1,11 @@
 use std::fs;
 use std::os::unix::fs::PermissionsExt;
-use std::path::{Path, PathBuf};
 use std::process::Command;
 use tempfile::tempdir;
 
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    fn cleanup_test_dir(path: &Path) {
-        if path.exists() {
-            let _ = fs::remove_dir_all(path);
-        }
-    }
 
     #[test]
     fn test_basic_directory_creation() {
@@ -250,7 +243,7 @@ mod tests {
 
         assert!(status.success());
         assert!(test_dir.exists());
-        
+
         // Check that permissions were set correctly
         let metadata = fs::metadata(&test_dir).unwrap();
         let mode = metadata.permissions().mode() & 0o777; // Get only the permission bits
@@ -275,7 +268,7 @@ mod tests {
         assert!(status.success());
         assert!(dir1.exists());
         assert!(dir2.exists());
-        
+
         // Check that permissions were set correctly for both directories
         let mode1 = fs::metadata(&dir1).unwrap().permissions().mode() & 0o777;
         let mode2 = fs::metadata(&dir2).unwrap().permissions().mode() & 0o777;
@@ -297,7 +290,10 @@ mod tests {
             .unwrap();
 
         // Directory should still be created even with invalid permissions
-        assert!(test_dir.exists() || String::from_utf8_lossy(&output.stderr).contains("Invalid permission format"));
+        assert!(
+            test_dir.exists()
+                || String::from_utf8_lossy(&output.stderr).contains("Invalid permission format")
+        );
     }
 
     #[test]
@@ -310,7 +306,7 @@ mod tests {
             .arg("run")
             .arg("--")
             .arg(test_dir.to_str().unwrap())
-            .arg("-755") 
+            .arg("-755")
             .arg("--readme")
             .arg("--git")
             .status()
@@ -318,11 +314,11 @@ mod tests {
 
         assert!(status.success());
         assert!(test_dir.exists());
-        
+
         // Check permissions
         let mode = fs::metadata(&test_dir).unwrap().permissions().mode() & 0o777;
         assert_eq!(mode, 0o755);
-        
+
         // Check that other flags worked too
         assert!(test_dir.join("README.md").exists() || !test_dir.join(".git").exists());
     }
@@ -343,7 +339,7 @@ mod tests {
 
         assert!(status.success());
         assert!(test_dir.exists());
-        
+
         let mode = fs::metadata(&test_dir).unwrap().permissions().mode() & 0o777;
         assert_eq!(mode, 0o000);
     }
@@ -363,11 +359,11 @@ mod tests {
 
         assert!(status.success());
         assert!(nested_dir.exists());
-        
+
         // Check permissions on the deepest directory
         let mode = fs::metadata(&nested_dir).unwrap().permissions().mode() & 0o777;
         assert_eq!(mode, 0o750);
-        
+
         // Check parent directories (they should have default permissions)
         let parent = nested_dir.parent().unwrap();
         let parent_mode = fs::metadata(parent).unwrap().permissions().mode() & 0o777;
@@ -388,7 +384,10 @@ mod tests {
             .unwrap();
 
         // Directory should still be created
-        assert!(test_dir.exists() || String::from_utf8_lossy(&output.stderr).contains("Invalid permission format"));
+        assert!(
+            test_dir.exists()
+                || String::from_utf8_lossy(&output.stderr).contains("Invalid permission format")
+        );
     }
 
     #[test]
@@ -406,7 +405,7 @@ mod tests {
 
         assert!(status.success());
         assert!(test_dir.exists());
-        
+
         let mode = fs::metadata(&test_dir).unwrap().permissions().mode() & 0o777;
         assert_eq!(mode, 0o777);
     }
