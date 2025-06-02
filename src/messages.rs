@@ -33,13 +33,6 @@ pub fn error(input: &str, arg: Option<&str>) {
     }
 }
 
-pub fn verbose(input: &str, arg: Option<&str>) {
-    match arg {
-        Some(arg) => eprintln!("{} {} {} {}", YELLOW, RESET, input, arg),
-        None => eprintln!("{} {} {}", YELLOW, RESET, input), // Handle the case when arg is None
-    }
-}
-
 pub fn help() {
     let help_message = format!(
         "{YELLOW}Usage:{RESET} drako [directories] [options]...
